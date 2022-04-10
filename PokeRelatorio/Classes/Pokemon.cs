@@ -11,30 +11,25 @@ namespace PokeRelatorio.Classes
     {
         private Guid Id { get; set; }
         private int DexNumber { get; set; }
-        public string? Name { get; private set; }
-        public string? Nature { get; private set; }
-        public string? Ability { get; private set; }
-        public string? PrimeiroTipo { get; private set; }
-        public string? SegundoTipo { get; private set; }
-        public int Nivel { get; set; }
-        public List<Ataque> Ataques { get; private set; }
+        public string? Name { get; set; }
+        public string? Nature { get; set; }
+        public string? Ability { get; set; }
+        public string? FirstType { get; set; }
+        public string? SecondType { get; set; }
+        public int Level { get; set; }
+        public List<Ataque> Attacks { get; private set; }
 
-        public Pokemon(string name, string natureza, string ability, string primeiroTipo, string segundoTipo = "")
+        public Pokemon()
         {
             Id = Guid.NewGuid();
             DexNumber += 1;
-            Name = name;
-            Nature = natureza;
-            Ability = ability;
-            PrimeiroTipo = primeiroTipo;
-            SegundoTipo = segundoTipo;
-            Ataques = new List<Ataque>();
+            Attacks = new List<Ataque>();
         }        
 
         public void DefineAtaques(Pokemon pokemon, string ataqueNome)
         {
             Ataque ataque = new Ataque(ataqueNome);
-            pokemon.Ataques.Add(ataque);
+            pokemon.Attacks.Add(ataque);
         }        
     }
 }
