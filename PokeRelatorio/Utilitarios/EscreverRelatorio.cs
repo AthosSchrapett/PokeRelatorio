@@ -8,19 +8,19 @@ namespace PokeRelatorio.Utilitarios
 {
     public class EscreverRelatorio
     {
-        public static DataTable ImportaTxt(string caminho)
+        public static DataTable ImportaTxt(string arquivo)
         {
-            var arquivo = File.ReadAllLines(Path.Combine(caminho, "PokemonIniciais.txt")).ToList();
+            var arquivoTxt = File.ReadAllLines(Path.Combine(arquivo)).ToList();
             DataTable dtArquivo = new();
 
-            foreach (string coluna in arquivo.First().Split("|").ToList())
+            foreach (string coluna in arquivoTxt.First().Split("|").ToList())
             {
                 dtArquivo.Columns.Add(coluna);
             }
 
-            for (int i = 1; i < arquivo.Count(); i++)
+            for (int i = 1; i < arquivoTxt.Count(); i++)
             {
-                dtArquivo.Rows.Add(arquivo[i].Split("|"));
+                dtArquivo.Rows.Add(arquivoTxt[i].Split("|"));
             }
 
             return dtArquivo;
