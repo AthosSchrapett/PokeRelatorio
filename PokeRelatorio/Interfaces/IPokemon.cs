@@ -9,6 +9,6 @@ namespace PokeRelatorio.Interfaces
 {
     public interface IPokemon
     {
-        void DefineAtaques(Pokemon pokemon, string ataqueNome);
+        void DefineAtaques(string ataqueNome);
     }
 }

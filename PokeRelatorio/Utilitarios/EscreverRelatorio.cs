@@ -8,40 +8,26 @@ namespace PokeRelatorio.Utilitarios
 {
     public class EscreverRelatorio
     {
-        public static DataTable ImportaTxt(string arquivo)
+        public static void ExportaExcel(List<Pokemon> pokemons, string caminho, string nomeSheet, string nomeArquivo)
         {
-            var arquivoTxt = File.ReadAllLines(Path.Combine(arquivo)).ToList();
-            DataTable dtArquivo = new();
-
-            foreach (string coluna in arquivoTxt.First().Split("|").ToList())
-            {
-                dtArquivo.Columns.Add(coluna);
-            }
-
-            for (int i = 1; i < arquivoTxt.Count(); i++)
-            {
-                dtArquivo.Rows.Add(arquivoTxt[i].Split("|"));
-            }
-
-            return dtArquivo;
-        }
-        public static void ExportaExcel(List<Pokemon> pokemons, string sheet, DataColumnCollection colunas, string caminho)
-        {
-
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             ExcelPackage pokemonPackage = new ExcelPackage();
             ExcelWorkbook pokemonWorkbook = pokemonPackage.Workbook;
-            FileInfo fi = new FileInfo(Path.Combine(caminho, $"{sheet}.xlsx"));
+            FileInfo fi = new FileInfo(Path.Combine(caminho, $"{nomeArquivo}.xlsx"));
 
-            ExcelWorksheet pokemonWorksheet = pokemonWorkbook.Worksheets.Add(sheet);
+            ExcelWorksheet pokemonWorksheet = pokemonWorkbook.Worksheets.Add(nomeSheet);
 
             pokemonWorksheet.Row(1).Style.Font.Bold = true;
 
-            for (int i = 0; i < colunas.Count; i++)
+            int i = 0;
+
+            foreach (string coluna in ImportaArquivoPokemon.Colunas.Split("|").ToList())
             {
-                pokemonWorksheet.Cells[1, i + 1].Value = colunas[i];
-                pokemonWorksheet.Cells[1, i + 1].Style.Font.Color.SetColor(color: Color.White);
-                pokemonWorksheet.Cells[1, i + 1].Style.Fill.SetBackground(color: Color.Crimson);
+                i += 1;
+
+                pokemonWorksheet.Cells[1, i].Value = coluna;
+                pokemonWorksheet.Cells[1, i].Style.Font.Color.SetColor(color: Color.White);
+                pokemonWorksheet.Cells[1, i].Style.Fill.SetBackground(color: Color.Crimson);
 
                 for (int y = 0; y < pokemons.Count; y++)
                 {
@@ -62,7 +48,6 @@ namespace PokeRelatorio.Utilitarios
             pokemonWorksheet.Cells.AutoFitColumns();
 
             pokemonPackage.SaveAs(fi);
-
         }
     }
 }
