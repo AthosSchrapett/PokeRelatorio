@@ -1,4 +1,5 @@
 ﻿using PokeRelatorio.Classes;
+using PokeRelatorio.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace PokeRelatorio.Utilitarios
     {
         public static string Colunas { get; private set; }
 
-        public static List<Pokemon> ImportaTxtPokemon(string[] arquivosTxtPokemon)
+        public static void ImportaTxtPokemon(string[] arquivosTxtPokemon, PokeContext context)
         {
             List<Pokemon> pokemons = new();
 
@@ -40,11 +41,12 @@ namespace PokeRelatorio.Utilitarios
                     pokemon.DefineAtaques(listaDadosPokemon[7]);
                     pokemon.DefineAtaques(listaDadosPokemon[8]);
 
-                    pokemons.Add(pokemon);
-                }
-            }
+                    pokemon.DataCriacao(DateTime.Now);
 
-            return pokemons;
+                    context.Pokemons.Add(pokemon);
+                    context.SaveChanges();
+                }
+            }           
         }
     }
 }

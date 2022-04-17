@@ -1,6 +1,7 @@
 ﻿using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using PokeRelatorio.Classes;
+using PokeRelatorio.Context;
 using System.Data;
 using System.Drawing;
 
@@ -8,8 +9,10 @@ namespace PokeRelatorio.Utilitarios
 {
     public class EscreverRelatorio
     {
-        public static void ExportaExcel(List<Pokemon> pokemons, string caminho, string nomeSheet, string nomeArquivo)
+        public static void ExportaExcel(PokeContext context, List<string> colunas, string caminho, string nomeSheet, string nomeArquivo)
         {
+            List<Pokemon> pokemons = context.Pokemons.ToList();
+
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             ExcelPackage pokemonPackage = new ExcelPackage();
             ExcelWorkbook pokemonWorkbook = pokemonPackage.Workbook;
@@ -21,7 +24,7 @@ namespace PokeRelatorio.Utilitarios
 
             int i = 0;
 
-            foreach (string coluna in ImportaArquivoPokemon.Colunas.Split("|").ToList())
+            foreach (string coluna in colunas)
             {
                 i += 1;
 
