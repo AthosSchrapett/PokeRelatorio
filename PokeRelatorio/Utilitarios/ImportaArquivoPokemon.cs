@@ -43,8 +43,14 @@ namespace PokeRelatorio.Utilitarios
 
                     pokemon.DataCriacao(DateTime.Now);
 
-                    context.Pokemons.Add(pokemon);
-                    context.SaveChanges();
+                    var validaExistenciaPokemon = context.Pokemons.AsEnumerable().FirstOrDefault(p => p.Name == pokemon.Name);
+
+                    if (validaExistenciaPokemon == null)
+                    {
+                        context.Pokemons.Add(pokemon);
+                        context.SaveChanges();
+                    }
+                   
                 }
             }           
         }

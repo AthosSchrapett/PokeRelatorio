@@ -10,5 +10,6 @@ namespace PokeRelatorio.Interfaces
     public interface IPokemon
     {
         void DefineAtaques(string ataqueNome);
+        void DataCriacao(DateTime createdAt);
     }
 }

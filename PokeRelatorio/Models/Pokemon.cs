@@ -11,7 +11,7 @@ namespace PokeRelatorio.Classes
     public class Pokemon : IPokemon
     {
         public Guid Id { get; }
-        public DateTime CreateAt { get; private set; }
+        public DateTime CreatedAt { get; private set; }
         public int? DexNumber { get; }
         public string Name { get; set; }
         public string Nature { get; set; }
@@ -34,9 +34,9 @@ namespace PokeRelatorio.Classes
                 Attacks.Add(ataque);
         }
 
-        public void CreatedAt(DateTime createdAt)
+        public void DataCriacao(DateTime createdAt)
         {
-            CreateAt = createdAt;
+            CreatedAt = createdAt;
         }
     }
 }

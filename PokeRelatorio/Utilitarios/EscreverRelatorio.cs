@@ -13,6 +13,12 @@ namespace PokeRelatorio.Utilitarios
         {
             List<Pokemon> pokemons = context.Pokemons.ToList();
 
+            foreach (Pokemon pokemon in pokemons)
+            {
+                foreach (string ataque in context.Ataques.Where(x => x.PokemonId == pokemon.Id).Select(x => x.Nome).ToList())
+                    pokemon.DefineAtaques(ataque);
+            }
+
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             ExcelPackage pokemonPackage = new ExcelPackage();
             ExcelWorkbook pokemonWorkbook = pokemonPackage.Workbook;
